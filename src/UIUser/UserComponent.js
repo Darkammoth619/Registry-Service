@@ -5,8 +5,19 @@ import EditUserForm from '../forms/EditUserForm';
 import UserTable from '../tables/UserTable';
 
 const UserComponent = () => {
+	var usersData=[];
 
-    const usersData = []
+	//Axios calls
+	axios.get(`http://localhost:8080/jxrs-registry/v1/users`).then(res=>{
+			console.log(res.data);
+			console.log(res.data.length);
+			res.data.forEach(usermod=>{
+				usersData=[
+					{id:usermod.id, firstname: usermod.firstName, username:usermod.userName, lastname:usermod.lastName, password:usermod.password, email:usermod.email, birth:usermod.birth, rfc:usermod.rfc, curp:usermod.curp}
+				]
+			})
+
+		});
 
 	const initialFormState = { id: null, firstname: '', username: '', lastname: '', password:'', email:'', birth:'', rfc:'', curp:''}
 
@@ -15,13 +26,6 @@ const UserComponent = () => {
   const [ currentUser, setCurrentUser ] = useState(initialFormState)
   const [ editing, setEditing ] = useState(false)
 
-	//
-
-		axios.get(`http://localhost:8080/jxrs-registry/v1/users`).then(res=>{
-			console.log(res.data);
-		})
-	
-    
     // CRUD operations for User 
 	const addUser = user => {
 		user.id = users.length + 1
