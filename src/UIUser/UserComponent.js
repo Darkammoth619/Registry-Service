@@ -6,20 +6,31 @@ import UserTable from '../tables/UserTable';
 
 const UserComponent = () => {
 	var usersData=[];
-
 	//Axios calls
 	axios.get(`http://localhost:8080/jxrs-registry/v1/users`).then(res=>{
-			console.log(res.data);
+			console.log(res.data[0].id);
 			console.log(res.data.length);
+			
 			res.data.forEach(usermod=>{
-				usersData=[
-					{id:usermod.id, firstname: usermod.firstName, username:usermod.userName, lastname:usermod.lastName, password:usermod.password, email:usermod.email, birth:usermod.birth, rfc:usermod.rfc, curp:usermod.curp}
-				]
-			})
-
-		});
-
-	const initialFormState = { id: null, firstname: '', username: '', lastname: '', password:'', email:'', birth:'', rfc:'', curp:''}
+				console.log(usermod);
+			});
+		}).catch(err =>{
+			console.log(err);
+		})
+		/*usersData=[
+			{id:1, firstname: " ", username: " ", lastname:" ", password:" ", email:" ", birth:" ", rfc:" ", curp:" "}
+		]*/
+	const initialFormState = { 
+		id: null, 
+		firstname: '',
+		username: '',
+		lastname: '',
+		password:'',
+		email:'',
+		birth:'',
+		rfc:'',
+		curp:''
+	}
 
 	// Setting state
   const [ users, setUsers ] = useState(usersData)
